@@ -10,16 +10,46 @@ comprimento_cobra = 30
 imagem_secao_cobra = pygame.image.load("secao_cobra.png").convert()
 menor_cobra = pygame.transform.scale(imagem_secao_cobra, (15, 15))
 
-game = True
 
-posicao_cobra_x = -120
-posicao_cobra_y = 400
-velocidade_da_cobra_x = 3
-velocidade_da_cobra_y = 0
+class Cobra(pygame.sprite.Sprite):
+
+    def __init__(self, imagem, posição_x, posição_y):
+
+        pygame.sprite.Sprite.__init__(self)
+
+        self.image = imagem
+        self.rect = self.image.get_rect()
+        self.rect.x = posição_x
+        self.rect.y = posição_y
+        self.speedx = 3
+        self.speedy = 0
+
+    def update(self):
+
+        self.rect.x += self.speedx
+        self.rect.y += self.speedy
+
+        if self.rect.left > 1120:
+            self.rect.x = -120
+            self.rect.y = 400
+            self.speedx = 3
+            self.speedy = 0
+
+game = True
 
 clock = pygame.time.Clock()
 FPS = 200
 
+pedaços_da_cobra = pygame.sprite.Group()
+
+x = -15
+y = 400
+
+for i in range(4):
+
+    pedaço_cobra = Cobra(menor_cobra, x, y)
+    pedaços_da_cobra.add(pedaço_cobra)
+    x -= 15
 
 while game:
 
@@ -31,20 +61,11 @@ while game:
 
             game = False
 
-    posicao_cobra_x += velocidade_da_cobra_x
-    posicao_cobra_y += velocidade_da_cobra_y
+    pedaços_da_cobra.update()
 
-    if posicao_cobra_x > 1000:
-        posicao_cobra_x = -30
- 
     janela_de_jogo.fill((0, 0, 0))
-    janela_de_jogo.blit(menor_cobra, (posicao_cobra_x, posicao_cobra_y))
-    janela_de_jogo.blit(menor_cobra, (posicao_cobra_x - 15, posicao_cobra_y))
-    janela_de_jogo.blit(menor_cobra, (posicao_cobra_x - 30, posicao_cobra_y))
-    janela_de_jogo.blit(menor_cobra, (posicao_cobra_x - 45, posicao_cobra_y))
-
+    pedaços_da_cobra.draw(janela_de_jogo)
 
     pygame.display.update()
-
 
 pygame.quit()
