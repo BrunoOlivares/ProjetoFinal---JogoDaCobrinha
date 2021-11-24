@@ -1,13 +1,13 @@
 import pygame
 import random
-from Predefinições import ACABOU, FPS, TA_ROLANDO, LARGURA, COMPRIMENTO
+from Predefinições import ACABOU, FPS, TA_ROLANDO, LARGURA, COMPRIMENTO, TA_COMEÇANDO
 
-def init_screen(screen):
+def game_over_sreen(tela):
     # Variável para o ajuste de velocidade
     clock = pygame.time.Clock()
 
     # Carrega o fundo da tela inicial
-    background = pygame.image.load('Tela_inicial_ctexto.png').convert()
+    background = pygame.image.load('Tela_de_game_over.png').convert()
     background = pygame.transform.scale(background, (COMPRIMENTO, LARGURA))
     background_rect = background.get_rect()
 
@@ -20,16 +20,21 @@ def init_screen(screen):
         # Processa os eventos (mouse, teclado, botão, etc).
         for event in pygame.event.get():
             # Verifica se foi fechado.
+
             if event.type == pygame.QUIT:
                 estado_de_jogo = ACABOU
                 rolando = False
 
             if event.type == pygame.KEYDOWN:
-                estado_de_jogo = TA_ROLANDO
-                rolando = False
+
+                if event.key == pygame.K_c:
+
+                    estado_de_jogo = TA_COMEÇANDO
+                    rolando = False
+
 
         # A cada loop, redesenha o fundo e os sprites
-        screen.blit(background, background_rect)
+        tela.blit(background, background_rect)
 
         # Depois de desenhar tudo, inverte o display.
         pygame.display.flip()
