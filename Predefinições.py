@@ -1,0 +1,10 @@
+LARGURA = 800
+COMPRIMENTO = 1000
+
+#Estados de jogo
+
+ACABOU = 0
+TA_COMEÇANDO = 1
+TA_ROLANDO = 2
+
+FPS = 30
