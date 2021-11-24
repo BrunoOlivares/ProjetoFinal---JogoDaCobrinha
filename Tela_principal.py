@@ -14,7 +14,7 @@ def o_jogo(tela):
     humberto_andando = pygame.transform.scale(imagem_secao_cobraberto2, (25, 25))
     speed = 30
     animacao_Humberto = []
-    tamanho_cobra = 10
+    tamanho_cobra = 25
 
     for i in range(1, 6):
 
@@ -42,15 +42,6 @@ def o_jogo(tela):
 
         def update(self):
 
-            if self.rect.left > 1120 and self.speedx > 0 :
-                self.rect.x = -120
-            if self.rect.left < 5 and self.speedx < 0 :
-                self.rect.x = 1115
-            if self.rect.top < 5 and self.speedy < 0:
-                self.rect.y = 795
-            if self.rect.top > 800 and self.speedy > 0:
-                self.rect.top = 6
-
             self.rect.x += self.speedx
             self.rect.y += self.speedy
 
@@ -73,10 +64,10 @@ def o_jogo(tela):
     estado_de_jogo = TA_ROLANDO
 
     clock = pygame.time.Clock()
-    FPS = 15
+    FPS = 10
 
     x = 300
-    y = 400
+    y = 300
 
     #cabeça e jogador
 
@@ -124,9 +115,8 @@ def o_jogo(tela):
 
                     estado_de_jogo = GAME_OVER
 
+        coordenadas_xy_pedaços.append([player.rect.x, player.rect.y])        
         player.update()
-
-        coordenadas_xy_pedaços.append([player.rect.x, player.rect.y])
 
         if len(coordenadas_xy_pedaços) > tamanho_cobra:
             del coordenadas_xy_pedaços[0]
@@ -137,13 +127,34 @@ def o_jogo(tela):
 
         rabo_da_cobra.empty()
 
-        for coordenada in coordenadas_xy_pedaços:
+        for i in range(1, len(coordenadas_xy_pedaços)):
+
+            coordenada = coordenadas_xy_pedaços[i]
 
             pedaço = Pedaço_Cobra(humberto_parado, coordenada[0], coordenada[1])
             rabo_da_cobra.add(pedaço)
-            print(coordenadas_xy_pedaços)
+            #print(coordenadas_xy_pedaços)
 
         rabo_da_cobra.update()
+
+        hit = pygame.sprite.spritecollide(player, rabo_da_cobra, False)
+
+        if len(hit) > 0:
+
+            estado_de_jogo = GAME_OVER
+
+        if player.rect.x == 0:
+            estado_de_jogo = GAME_OVER
+
+        if player.rect.x == 1200:
+            estado_de_jogo = GAME_OVER
+
+        if player.rect.y == 0:
+            estado_de_jogo = GAME_OVER
+
+        if player.rect.y == 900:
+            estado_de_jogo = GAME_OVER
+
         tela.blit(background, background_rect)
         pedaços_da_cobra.draw(tela)
         rabo_da_cobra.draw(tela)
