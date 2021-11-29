@@ -9,9 +9,9 @@ def o_jogo(tela):
     background = pygame.image.load("Tela_principal.png").convert()
     background = pygame.transform.scale(background, (COMPRIMENTO, LARGURA))
     background_rect = background.get_rect()
-    img_fruta = pygame.image.load("secao_cobra.png").convert_alpha()
+    img_fruta = pygame.image.load("fruta.png").convert_alpha()
     img_fruta = pygame.transform.scale(img_fruta, (25, 25))
-    imagem_secao_cobraberto2 = pygame.image.load("2berto.png").convert_alpha()
+    imagem_secao_cobraberto2 = pygame.image.load("Humberto2.0\Humberto_Direita_1.png").convert_alpha()
     humberto_andando = pygame.transform.scale(imagem_secao_cobraberto2, (8, 8))
     speed = 25
     animacao_Humberto_direita = []
