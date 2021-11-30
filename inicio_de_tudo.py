@@ -6,6 +6,7 @@ from Tela_Inicial import init_screen
 from Tela_principal import o_jogo
 
 pygame.init()
+pygame.mixer.init()
 
 # ----- Gera tela principal
 tela = pygame.display.set_mode((COMPRIMENTO, LARGURA))
