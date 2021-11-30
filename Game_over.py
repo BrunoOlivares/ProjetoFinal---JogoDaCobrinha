@@ -11,6 +11,11 @@ def game_over_sreen(tela):
     background = pygame.transform.scale(background, (COMPRIMENTO, LARGURA))
     background_rect = background.get_rect()
 
+    #musica
+    pygame.mixer.music.load('game_over.wav')
+    pygame.mixer.music.set_volume(0.2)
+    pygame.mixer.music.play(loops=0)
+
     rolando = True
     while rolando:
 

@@ -18,7 +18,9 @@ def o_jogo(tela):
     animacao_Humberto_esquerda=[]
     animacao_tds=[]
     fonte_texto = pygame.font.SysFont(None, 20)
-
+    pygame.mixer.music.load('musica_tela_principal.mp3')
+    pygame.mixer.music.set_volume(0.2)
+    
     for i in range(1, 5):
 
         animacao_esquerda = "Humberto2.0/Humberto_Esquerda_{}.png".format(i)
@@ -119,6 +121,7 @@ def o_jogo(tela):
     pedaços_da_cobra.add(player)
     frutola=fruta(img_fruta,COMPRIMENTO,LARGURA)
     frutinhaG.add(frutola)
+    pygame.mixer.music.play(loops=-1)
     while estado_de_jogo == TA_ROLANDO:
         for pedaco in pedaços_da_cobra:
             continuar=False
@@ -226,6 +229,9 @@ def o_jogo(tela):
 
         if player.rect.y == 900:
             estado_de_jogo = GAME_OVER
+        
+        if estado_de_jogo == GAME_OVER:
+            pygame.mixer.music.stop()
 
         col = pygame.sprite.spritecollide(player, frutinhaG, False)
 
