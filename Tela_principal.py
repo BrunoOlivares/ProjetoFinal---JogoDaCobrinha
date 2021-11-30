@@ -245,7 +245,7 @@ def o_jogo(tela):
         if len(frutinhaG)==0:
             frutola=fruta(img_fruta,COMPRIMENTO,LARGURA)
             frutinhaG.add(frutola)
-    return estado_de_jogo
 
+    return estado_de_jogo
     
 
