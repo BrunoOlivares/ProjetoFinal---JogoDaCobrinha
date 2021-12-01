@@ -1,19 +1,21 @@
 import pygame
 import random
-from Predefinições import ACABOU, FPS, TA_ROLANDO, LARGURA, COMPRIMENTO
+from Predefinicoes import ACABOU, FPS, TA_ROLANDO, LARGURA, COMPRIMENTO
+from assets import load_assets
 
 def init_screen(screen):
     # Variável para o ajuste de velocidade
     clock = pygame.time.Clock()
-    
+    assets=load_assets()
+    musica_menu=assets['musica menu']
+    bg_inicial=assets['bg inicial']
+    bg_rect_inicial=assets['bg rect inicial']
 
     # Carrega o fundo da tela inicial
-    background = pygame.image.load('Tela_inicial_ctexto.png').convert()
-    background = pygame.transform.scale(background, (COMPRIMENTO, LARGURA))
-    background_rect = background.get_rect()
+    
     
     #musica do menu
-    pygame.mixer.music.load('musica_menu.mp3')
+    pygame.mixer.music.load(musica_menu)
     pygame.mixer.music.set_volume(0.3)
     pygame.mixer.music.play(loops=-1)
 
@@ -36,7 +38,7 @@ def init_screen(screen):
                 pygame.mixer.music.stop()
 
         # A cada loop, redesenha o fundo e os sprites
-        screen.blit(background, background_rect)
+        screen.blit(bg_inicial, bg_rect_inicial)
 
         # Depois de desenhar tudo, inverte o display.
         pygame.display.flip()

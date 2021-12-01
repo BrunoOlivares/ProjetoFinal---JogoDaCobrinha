@@ -9,3 +9,13 @@ TA_COMEÇANDO = 2
 TA_ROLANDO = 3
 
 FPS = 20
+
+coordenadas_xy_pedaços = []
+
+speed = 25
+
+bertinhos=1
+
+x_inicial = 300
+
+y_inicial = 300

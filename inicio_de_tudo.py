@@ -1,7 +1,7 @@
 import pygame
 import random
 from Game_over import game_over_sreen
-from Predefinições import GAME_OVER, LARGURA, COMPRIMENTO, TA_COMEÇANDO, TA_ROLANDO, ACABOU
+from Predefinicoes import GAME_OVER, LARGURA, COMPRIMENTO, TA_COMEÇANDO, TA_ROLANDO, ACABOU
 from Tela_Inicial import init_screen
 from Tela_principal import o_jogo
 

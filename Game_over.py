@@ -1,18 +1,24 @@
 import pygame
 import random
-from Predefinições import ACABOU, FPS, TA_ROLANDO, LARGURA, COMPRIMENTO, TA_COMEÇANDO
+
+from pygame.image import load
+from Predefinicoes import ACABOU, FPS,TA_COMEÇANDO
+from assets import load_assets
 
 def game_over_sreen(tela):
     # Variável para o ajuste de velocidade
     clock = pygame.time.Clock()
 
+    assets=load_assets()
+    tela_game_over=assets['bg game over']
+    tela_rect_game_over=assets['bg rect game over']
+    musica_game_over=assets['musica game over']
+
     # Carrega o fundo da tela inicial
-    background = pygame.image.load('Tela_de_game_over.png').convert()
-    background = pygame.transform.scale(background, (COMPRIMENTO, LARGURA))
-    background_rect = background.get_rect()
+  
 
     #musica
-    pygame.mixer.music.load('game_over.wav')
+    pygame.mixer.music.load(musica_game_over)
     pygame.mixer.music.set_volume(0.2)
     pygame.mixer.music.play(loops=0)
 
@@ -39,7 +45,7 @@ def game_over_sreen(tela):
 
 
         # A cada loop, redesenha o fundo e os sprites
-        tela.blit(background, background_rect)
+        tela.blit(tela_game_over, tela_rect_game_over)
 
         # Depois de desenhar tudo, inverte o display.
         pygame.display.flip()

@@ -1,42 +1,24 @@
 from os import device_encoding
 import pygame
 from pygame.sprite import Sprite
-from Predefinições import FPS, LARGURA, COMPRIMENTO, GAME_OVER, TA_ROLANDO, ACABOU
+from Predefinicoes import FPS, LARGURA, COMPRIMENTO, GAME_OVER, TA_ROLANDO, ACABOU,coordenadas_xy_pedaços,speed,x_inicial,y_inicial
+from assets import load_assets
 import random
 
 def o_jogo(tela):
-
-    background = pygame.image.load("Tela_principal.png").convert()
-    background = pygame.transform.scale(background, (COMPRIMENTO, LARGURA))
-    background_rect = background.get_rect()
-    img_fruta = pygame.image.load("Fruta_py.png").convert_alpha()
-    img_fruta = pygame.transform.scale(img_fruta, (25, 25))
-    imagem_secao_cobraberto2 = pygame.image.load("Humberto2.0\Humberto_Direita_1.png").convert_alpha()
-    speed = 25
-    animacao_Humberto_direita = []
-    animacao_Humberto_esquerda=[]
-    animacao_tds=[]
-    fonte_texto = pygame.font.SysFont(None, 20)
-    pygame.mixer.music.load('musica_tela_principal.mp3')
-    pygame.mixer.music.set_volume(0.2)
-    
-    for i in range(1, 5):
-
-        animacao_esquerda = "Humberto2.0/Humberto_Esquerda_{}.png".format(i)
-        animacao_esquerda = pygame.image.load(animacao_esquerda).convert_alpha()
-        animacao_esquerda = pygame.transform.scale(animacao_esquerda, (25, 25))
-        animacao_Humberto_esquerda.append(animacao_esquerda)
-        animacao_direita = "Humberto2.0/Humberto_Direita_{}.png".format(i)
-        animacao_direita = pygame.image.load(animacao_direita).convert_alpha()
-        animacao_direita = pygame.transform.scale(animacao_direita, (25, 25))
-        animacao_Humberto_direita.append(animacao_direita)
-
-    animacao_tds.append(animacao_Humberto_direita)
-    animacao_tds.append(animacao_Humberto_esquerda)
-    coordenadas_xy_pedaços = []
+    assets=load_assets()
+    bg=assets['bg principal']
+    bg_rect=assets['bg rect principal']
+    imagem_fruta=assets['imagem da fruta']
+    fonte=assets['fonte do texto']
+    musica_durante=assets['musica durante jogo']
+    animacoes_berto=assets['animações']
+    bertos=1
     pedaços_da_cobra = pygame.sprite.Group()
     rabo_da_cobra = pygame.sprite.Group()
     frutinhaG=pygame.sprite.Group()
+    pygame.mixer.music.load(musica_durante)
+    pygame.mixer.music.set_volume(0.2)
 
     class Cabeca(pygame.sprite.Sprite):
 
@@ -64,7 +46,7 @@ def o_jogo(tela):
                 self.dir_esq=1
                 self.animacao+=1
             
-            if self.speedy !=0:
+            if self.speedy > 0 or self.speedy<0:
                 self.animacao+=1
 
 
@@ -114,14 +96,11 @@ def o_jogo(tela):
     estado_de_jogo = TA_ROLANDO
 
     clock = pygame.time.Clock()
-    bertos=1
-    x = 300
-    y = 300
 
     #cabeça e jogador
-    player = Cabeca(animacao_tds,x,y)
+    player = Cabeca(animacoes_berto,x_inicial,y_inicial)
     pedaços_da_cobra.add(player)
-    frutola=fruta(img_fruta,COMPRIMENTO,LARGURA)
+    frutola=fruta(imagem_fruta,COMPRIMENTO,LARGURA)
     frutinhaG.add(frutola)
     pygame.mixer.music.play(loops=-1)
     while estado_de_jogo == TA_ROLANDO:
@@ -134,7 +113,6 @@ def o_jogo(tela):
                 continuar=True
         clock.tick(FPS)
         for event in pygame.event.get():
-            apertou=False
 
             if event.type == pygame.QUIT:
 
@@ -171,6 +149,7 @@ def o_jogo(tela):
                     estado_de_jogo = GAME_OVER
         
         player.update()
+        
 
         if len(coordenadas_xy_pedaços) > bertos:
             del coordenadas_xy_pedaços[0]
@@ -198,9 +177,12 @@ def o_jogo(tela):
             dir_esq = coordenada[2]
             animacao = coordenada[3]
             
-            pedaco = Pedaco_Cobra(animacao_tds, cordenada_x, cordenada_y, dir_esq, animacao)
+            pedaco = Pedaco_Cobra(animacoes_berto, cordenada_x, cordenada_y, dir_esq, animacao)
+            rabo_da_cobra.add(pedaco)
+            #print(coordenadas_xy_pedaços)
 
-
+        rabo_da_cobra.update()
+        pedaços_da_cobra.add(rabo_da_cobra)
 
         hit = pygame.sprite.spritecollide(player, rabo_da_cobra, False)
 
@@ -229,17 +211,17 @@ def o_jogo(tela):
             bertos+=1
             frutinhaG.empty()
 
-        tela.blit(background, background_rect)
+        tela.blit(bg, bg_rect)
         pedaços_da_cobra.draw(tela)
         frutinhaG.draw(tela)
 
-        pontuacao = fonte_texto.render("Numero de Bertos: {}". format(bertos), True, (120, 255, 120))
+        pontuacao = fonte.render("Numero de Bertos: {}". format(bertos), True, (120, 255, 120))
         tela.blit(pontuacao, (17, 325))
 
         pygame.display.update()
 
         if len(frutinhaG)==0:
-            frutola=fruta(img_fruta,COMPRIMENTO,LARGURA)
+            frutola=fruta(imagem_fruta,COMPRIMENTO,LARGURA)
             frutinhaG.add(frutola)
 
     return estado_de_jogo
