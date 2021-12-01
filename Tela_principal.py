@@ -36,7 +36,7 @@ def o_jogo(tela):
     rabo_da_cobra = pygame.sprite.Group()
     frutinhaG=pygame.sprite.Group()
 
-    class Cabeça(pygame.sprite.Sprite):
+    class Cabeca(pygame.sprite.Sprite):
 
         def __init__(self,lista,x,y):
 
@@ -61,6 +61,10 @@ def o_jogo(tela):
             if self.speedx < 0:
                 self.dir_esq=1
                 self.animacao+=1
+            
+            if self.speedy !=0:
+                self.animacao+=1
+
 
             if self.animacao > 3:
                 self.animacao=0
@@ -68,7 +72,7 @@ def o_jogo(tela):
             self.rect.x += self.speedx
             self.rect.y += self.speedy
 
-    class Pedaço_Cobra(pygame.sprite.Sprite):
+    class Pedaco_Cobra(pygame.sprite.Sprite):
 
         def __init__(self, lista, x, y):
 
@@ -107,8 +111,7 @@ def o_jogo(tela):
     y = 300
 
     #cabeça e jogador
-    changey=-200
-    player = Cabeça(animacao_tds,x,y)
+    player = Cabeca(animacao_tds,x,y)
     pedaços_da_cobra.add(player)
     frutola=fruta(img_fruta,COMPRIMENTO,LARGURA)
     frutinhaG.add(frutola)
@@ -190,7 +193,7 @@ def o_jogo(tela):
             coordenada = coordenadas_xy_pedaços[len(coordenadas_xy_pedaços)-i-1]
             cordenada_x=coordenada[0]
             cordenada_y=coordenada[1]
-            pedaco = Pedaço_Cobra(animacao_tds, cordenada_x, cordenada_y)
+            pedaco = Pedaco_Cobra(animacao_tds, cordenada_x, cordenada_y)
             if apertou==True:
                 if player.speedx < 0:
                     pedaco.dir_esq=1
