@@ -9,3 +9,5 @@ TA_COMEÇANDO = 2
 TA_ROLANDO = 3
 
 FPS = 20
+
+speed = 25
