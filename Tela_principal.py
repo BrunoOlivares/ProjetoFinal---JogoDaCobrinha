@@ -1,12 +1,16 @@
+#imports de bibliotecas e outros arquivos utilizados para criar o jogo
+
 from os import device_encoding
 import pygame
 from pygame.sprite import Sprite
 from Predefinicoes import FPS, LARGURA, COMPRIMENTO, GAME_OVER, TA_ROLANDO, ACABOU,coordenadas_xy_pedaços,speed,x_inicial,y_inicial
 from assets import load_assets
 import random
-from clas import cabeca , fruta , Pedaço_Cobra
+from clas import cabeca , fruta , Pedaco_Cobra
 
+#função para iniciar o jogo-------------------------------------
 def o_jogo(tela):
+    #importar da pasta assets as imagens e musicas-------------------
     assets=load_assets()
     bg=assets['bg principal']
     bg_rect=assets['bg rect principal']
@@ -20,111 +24,44 @@ def o_jogo(tela):
     frutinhaG=pygame.sprite.Group()
     pygame.mixer.music.load(musica_durante)
     pygame.mixer.music.set_volume(0.2)
-
-    class Cabeca(pygame.sprite.Sprite):
-    
-        def __init__(self,lista,x,y):
-
-            pygame.sprite.Sprite.__init__(self)
-            self.lista=lista
-            self.animacao=0
-            self.dir_esq=0
-            self.image = self.lista[self.dir_esq][self.animacao]
-            self.rect = self.image.get_rect()
-            self.rect.x = x
-            self.rect.y = y
-            self.speedx = speed
-            self.speedy = 0
-
-        def update(self):
-
-            if self.speedx > 0:
-                self.dir_esq=0
-                self.animacao+=1
-
-
-            if self.speedx < 0:
-                self.dir_esq=1
-                self.animacao+=1
-            
-            if self.speedy > 0 or self.speedy<0:
-                self.animacao+=1
-
-
-            if self.animacao > 3:
-                self.animacao=0
-
-            if self.speedy != 0:
-                self.animacao += 1
-            
-            if self.animacao > 3:
-                self.animacao = 0
-
-            self.image=self.lista[self.dir_esq][self.animacao]
-            self.rect.x += self.speedx
-            self.rect.y += self.speedy
-
-    class Pedaco_Cobra(pygame.sprite.Sprite):
-
-        def __init__(self, lista, x, y, dir_esq, animacao):
-
-            pygame.sprite.Sprite.__init__(self)
-            
-            self.all=lista
-            self.image = self.all[dir_esq][animacao]
-            self.rect = self.image.get_rect()
-            self.rect.x = x
-            self.rect.y = y
-
-
-        def update(self):
-
-            pass
-
-    
-    class fruta (pygame.sprite.Sprite):
-        def __init__(self,img,comprimento,largura):
-            pygame.sprite.Sprite.__init__(self)
-            x=random.randint(200, comprimento-90)
-            y=random.randint(50, largura-60)
-            self.image=img
-            self.rect=self.image.get_rect()
-            self.rect.x=x
-            self.rect.y=y
-        def update(self):
-            pass
+    #----------------------------------------------------------
 
     estado_de_jogo = TA_ROLANDO
 
     clock = pygame.time.Clock()
 
-    #cabeça e jogador
-    player = Cabeca(animacoes_berto,x_inicial,y_inicial)
+    #cabeça e jogador --------------------------------------------------------------
+    player = cabeca(animacoes_berto,x_inicial,y_inicial)
     pedaços_da_cobra.add(player)
     frutola=fruta(imagem_fruta,COMPRIMENTO,LARGURA)
     frutinhaG.add(frutola)
+    
+    #loop da musica durante a partida-----------------------------------------------
     pygame.mixer.music.play(loops=-1)
+    
+    #spawn da fruta apos colisão-------------------------------------------------------
     while estado_de_jogo == TA_ROLANDO:
         for pedaco in pedaços_da_cobra:
             continuar=False
             while continuar:
-                if frutola.rect.x == pedaco.rect.x and frutola.rect.y== pedaco.rect.y:
+                if frutola.rect.x == pedaco.rect.x and frutola.rect.y== pedaco.rect.y:     
                     frutola.rect.x=random.randint(0,COMPRIMENTO)
-                    frutola.rect.y=random.randint(0,LARGURA)
+                    frutola.rect.y=random.randint(0,LARGURA) 
                 continuar=True
+        
         clock.tick(FPS)
         for event in pygame.event.get():
 
-            if event.type == pygame.QUIT:
+            if event.type == pygame.QUIT: 
 
-                estado_de_jogo = ACABOU
+                estado_de_jogo = ACABOU    # fim do jogo
              
 
             if event.type == pygame.KEYDOWN:
 
                 apertou=True
 
-                # Dependendo da tecla, altera a velocidade.
+                # Dependendo da tecla, altera a velocidade para trocar de direção
                 if event.key == pygame.K_LEFT and player.speedx == 0:
 
                     player.speedx = -speed
@@ -151,7 +88,7 @@ def o_jogo(tela):
         
         player.update()
         
-
+        #verifica o tamanho da cobra com o tamanho da lista
         if len(coordenadas_xy_pedaços) > bertos:
             del coordenadas_xy_pedaços[0]
 
@@ -160,7 +97,8 @@ def o_jogo(tela):
             rabo.kill()
 
         rabo_da_cobra.empty()
-
+        
+        #verifica colisão com a fruta e tambem aumenta o tamanho da cobra
         col = pygame.sprite.spritecollide(player, frutinhaG, False)
 
         if len(col) > 0:
@@ -184,9 +122,11 @@ def o_jogo(tela):
 
         rabo_da_cobra.update()
         pedaços_da_cobra.add(rabo_da_cobra)
-
+        
+        # teste de colisão
         hit = pygame.sprite.spritecollide(player, rabo_da_cobra, False)
 
+        #delimitações da area de jogo ----------------------------------------------
         if len(hit) > 0:
 
             estado_de_jogo = GAME_OVER
@@ -205,16 +145,18 @@ def o_jogo(tela):
         
         if estado_de_jogo == GAME_OVER:
             pygame.mixer.music.stop()
-
+        #colisão com a fruta = aumento de tamanho---------------------------------------------------------
         col = pygame.sprite.spritecollide(player, frutinhaG, False)
 
         if len(col) > 0:
             bertos+=1
             frutinhaG.empty()
-
+        
         tela.blit(bg, bg_rect)
         pedaços_da_cobra.draw(tela)
         frutinhaG.draw(tela)
+
+        #print da pontuação ------------------------------------------------------------------------------
 
         pontuacao = fonte.render("Numero de Bertos: {}". format(bertos), True, (120, 255, 120))
         tela.blit(pontuacao, (17, 325))

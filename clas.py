@@ -1,6 +1,9 @@
 import pygame
 import random
-from Predefinições import speed
+from Predefinicoes import speed
+
+
+# criação da classe cabeça--------------------------------------
 
 class cabeca(pygame.sprite.Sprite):
 
@@ -17,9 +20,10 @@ class cabeca(pygame.sprite.Sprite):
         self.speedx = speed
         self.speedy = 0
 
+    #função de update da cabeça com animação--------------------
     def update(self):
 
-        if self.speedx > 0:
+        if self.speedx > 0:             
             self.dir_esq=0
             self.animacao+=1
 
@@ -41,7 +45,9 @@ class cabeca(pygame.sprite.Sprite):
         self.rect.x += self.speedx
         self.rect.y += self.speedy
 
-class Pedaço_Cobra(pygame.sprite.Sprite):
+
+#criação da classe Pedaço_Cobra -----------------------------
+class Pedaco_Cobra(pygame.sprite.Sprite):
 
     def __init__(self, lista, x, y, dir_esq, animacao):
 
@@ -56,6 +62,7 @@ class Pedaço_Cobra(pygame.sprite.Sprite):
     def update(self):
         pass
 
+#criação da classe fruta -----------------------------------
 
 class fruta (pygame.sprite.Sprite):
     def __init__(self,img,comprimento,largura):
