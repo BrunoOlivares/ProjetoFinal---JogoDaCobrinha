@@ -6,11 +6,12 @@ from Predefinicoes import GAME_OVER, LARGURA, COMPRIMENTO, TA_COMEÇANDO, TA_ROL
 from Tela_Inicial import init_screen
 from Tela_principal import o_jogo
 
-#iniciando o midulo do pygame e o mixer para colocar sons
+#iniciando o módulo do pygame e o mixer para colocar sons
 pygame.init()
 pygame.mixer.init()
 
-# ----- Gera tela principal
+#Geração de tela atual em relação ao estado do jogo-----------------
+
 tela = pygame.display.set_mode((COMPRIMENTO, LARGURA))
 pygame.display.set_caption('1,2,3 BERTO')
 
