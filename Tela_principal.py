@@ -4,6 +4,7 @@ from pygame.sprite import Sprite
 from Predefinicoes import FPS, LARGURA, COMPRIMENTO, GAME_OVER, TA_ROLANDO, ACABOU,coordenadas_xy_pedaços,speed,x_inicial,y_inicial
 from assets import load_assets
 import random
+from clas import cabeca , fruta , Pedaço_Cobra
 
 def o_jogo(tela):
     assets=load_assets()
@@ -21,7 +22,7 @@ def o_jogo(tela):
     pygame.mixer.music.set_volume(0.2)
 
     class Cabeca(pygame.sprite.Sprite):
-
+    
         def __init__(self,lista,x,y):
 
             pygame.sprite.Sprite.__init__(self)
