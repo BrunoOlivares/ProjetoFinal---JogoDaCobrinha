@@ -35,7 +35,6 @@ class config():
         #--------------------------------------------------
 
     def game_limitations(self,position,list,e):
-        print("enytrou")
         if len(list) > 0:
             e = self.game_over
 
