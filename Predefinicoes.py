@@ -1,31 +1,34 @@
-LARGURA = 900
-COMPRIMENTO = 1200
+class config():
+    def __init__(self) -> None:   
+        self.width = 900
+        self.length = 1200
 
-#Estados de jogo-----------------------------------
+        #Estados de jogo-----------------------------------
 
-ACABOU = 0
-GAME_OVER = 1
-TA_COMEÇANDO = 2
-TA_ROLANDO = 3
+        self.over = 0
+        self.game_over = 1
+        self.start = 2
+        self.happening = 3
 
-#FPS-----------------------------------------------
+        #FPS-----------------------------------------------
 
-FPS = 20
+        self.fps = 20
 
-#lista das cordenadas da cobra---------------------
+        #lista das cordenadas da cobra---------------------
 
-coordenadas_xy_pedaços = []
+        self.coordenadas_xy_pedaços = []
 
-# variaveis----------------------------------------
+        # variaveis----------------------------------------
 
-speed = 25
+        self.speed = 25
 
-bertinhos=1
+        self.bertinhos=1
 
-x_inicial = 300
+        self.x_inicial = 300
 
-y_inicial = 300
+        self.y_inicial = self.x_inicial
 
-speed = 25
+        #--------------------------------------------------
+        
 
-#--------------------------------------------------
+settings = config()

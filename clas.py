@@ -1,6 +1,6 @@
 import pygame
 import random
-from Predefinicoes import speed
+from Predefinicoes import settings
 
 
 # criação da classe cabeça--------------------------------------
@@ -17,7 +17,7 @@ class cabeca(pygame.sprite.Sprite):
         self.rect = self.image.get_rect()
         self.rect.x = x
         self.rect.y = y
-        self.speedx = speed
+        self.speedx = settings.speed
         self.speedy = 0
 
     #função de update da cabeça com animação--------------------

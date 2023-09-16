@@ -1,8 +1,8 @@
 import pygame
 import random
+from Predefinicoes import settings
 
 from pygame.image import load
-from Predefinicoes import ACABOU, FPS,TA_COMEÇANDO
 from assets import load_assets
 
 def game_over_sreen(tela):
@@ -26,21 +26,21 @@ def game_over_sreen(tela):
     while rolando:
 
         # Ajusta a velocidade do jogo.
-        clock.tick(FPS)
+        clock.tick(settings.fps)
 
         # Processa os eventos (mouse, teclado, botão, etc).
         for event in pygame.event.get():
             # Verifica se foi fechado.
 
             if event.type == pygame.QUIT:
-                estado_de_jogo = ACABOU
+                estado_de_jogo = settings.over
                 rolando = False
 
             if event.type == pygame.KEYDOWN:
 
                 if event.key == pygame.K_c:
 
-                    estado_de_jogo = TA_COMEÇANDO
+                    estado_de_jogo = settings.start
                     rolando = False
 
 

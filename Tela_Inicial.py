@@ -1,7 +1,7 @@
 import pygame
 import random
-from Predefinicoes import ACABOU, FPS, TA_ROLANDO, LARGURA, COMPRIMENTO
 from assets import load_assets
+from Predefinicoes import settings
 
 def init_screen(screen):
     # Variável para o ajuste de velocidade
@@ -23,17 +23,17 @@ def init_screen(screen):
     while rolando:
 
         # Ajusta a velocidade do jogo.
-        clock.tick(FPS)
+        clock.tick(settings.fps)
 
         # Processa os eventos (mouse, teclado, botão, etc).
         for event in pygame.event.get():
             # Verifica se foi fechado.
             if event.type == pygame.QUIT:
-                estado_de_jogo = ACABOU
+                estado_de_jogo = settings.over
                 rolando = False
 
             if event.type == pygame.KEYDOWN:
-                estado_de_jogo = TA_ROLANDO
+                estado_de_jogo = settings.happening
                 rolando = False
                 pygame.mixer.music.stop()
 
