@@ -33,6 +33,47 @@ class config():
         self.y_inicial = self.x_inicial
 
         #--------------------------------------------------
+   
+    def commands(self,p,e):
+    # Codigo para possíveis comandos e suas consequencias
+        for event in pygame.event.get():
+    
+            if event.type == pygame.QUIT: 
+
+                e = self.over    # fim do jogo
+             
+
+            if event.type == pygame.KEYDOWN:
+
+                apertou=True
+
+                # Dependendo da tecla, altera a velocidade para trocar de direção
+                if event.key == pygame.K_LEFT and p.speedx == 0:
+
+                    p.speedx = -self.speed
+                    p.speedy = 0
+
+                if event.key == pygame.K_RIGHT and p.speedx == 0:
+
+                    p.speedx = self.speed
+                    p.speedy = 0
+
+                if event.key == pygame.K_UP and p.speedy == 0:
+
+                    p.speedx = 0
+                    p.speedy = -self.speed
+
+                if event.key == pygame.K_DOWN and p.speedy == 0:
+
+                    p.speedx = 0
+                    p.speedy = self.speed
+
+                if event.key == pygame.K_0:
+
+                    e = self.game_over
+        
+        p.update()
+        return p,e
 
     def game_limitations(self,position,list,e):
         if len(list) > 0:

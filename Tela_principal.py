@@ -31,7 +31,7 @@ def o_jogo(tela):
     clock = pygame.time.Clock()
 
     #cabeça e jogador --------------------------------------------------------------
-    player = cabeca(animacoes_berto,settings.x_inicial,settings.y_inicial)
+    player = cabeca(animacoes_berto,[settings.x_inicial,settings.y_inicial])
     pedaços_da_cobra.add(player)
     frutola=fruta(imagem_fruta,settings.length,settings.width)
     frutinhaG.add(frutola)
@@ -50,43 +50,9 @@ def o_jogo(tela):
                 continuar=True
         
         clock.tick(settings.fps)
-        for event in pygame.event.get():
+        #Possíveis comandos
 
-            if event.type == pygame.QUIT: 
-
-                estado_de_jogo = settings.over    # fim do jogo
-             
-
-            if event.type == pygame.KEYDOWN:
-
-                apertou=True
-
-                # Dependendo da tecla, altera a velocidade para trocar de direção
-                if event.key == pygame.K_LEFT and player.speedx == 0:
-
-                    player.speedx = -settings.speed
-                    player.speedy = 0
-
-                if event.key == pygame.K_RIGHT and player.speedx == 0:
-
-                    player.speedx = settings.speed
-                    player.speedy = 0
-
-                if event.key == pygame.K_UP and player.speedy == 0:
-
-                    player.speedx = 0
-                    player.speedy = -settings.speed
-
-                if event.key == pygame.K_DOWN and player.speedy == 0:
-
-                    player.speedx = 0
-                    player.speedy = settings.speed
-
-                if event.key == pygame.K_0:
-
-                    estado_de_jogo = settings.game_over
-        
-        player.update()
+        player,estado_de_jogo = settings.commands(player,estado_de_jogo)
         
         #verifica o tamanho da cobra com o tamanho da lista
         if len(settings.coordenadas_xy_pedaços) > bertos:
@@ -110,15 +76,8 @@ def o_jogo(tela):
         for i in range(1,bertos):
 
             coordenada = settings.coordenadas_xy_pedaços[len(settings.coordenadas_xy_pedaços)-i-1]
-            cordenada_x = coordenada[0]
-            cordenada_y = coordenada[1]
-
-            dir_esq = coordenada[2]
-            animacao = coordenada[3]
-            
-            pedaco = Pedaco_Cobra(animacoes_berto, cordenada_x, cordenada_y, dir_esq, animacao)
+            pedaco = Pedaco_Cobra(animacoes_berto,coordenada)
             rabo_da_cobra.add(pedaco)
-            #print(coordenadas_xy_pedaços)
 
         rabo_da_cobra.update()
         pedaços_da_cobra.add(rabo_da_cobra)

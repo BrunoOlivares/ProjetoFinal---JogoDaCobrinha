@@ -6,24 +6,20 @@ from Predefinicoes import settings
 
 class cabeca(pygame.sprite.Sprite):
 
-    def position(self,x,y):
+    def position(self,position):
         self.rect = self.image.get_rect()
-        self.rect.x = x
-        self.rect.y = y
+        self.rect.x = position[0]
+        self.rect.y = position[1]
+         
     
-    def img(self,d_e,animation):
-        self.image = self.lista[self.dir_esq][self.animacao]
-
-        
-    
-    def __init__(self,lista,x,y):
+    def __init__(self,animation,position):
 
         pygame.sprite.Sprite.__init__(self)
-        self.lista=lista
+        self.lista=animation
         self.animacao=0
         self.dir_esq=0
         self.image = self.lista[self.dir_esq][self.animacao]
-        self.position(x,y)
+        self.position(position)
         self.speedx = settings.speed
         self.speedy = 0
 
@@ -56,10 +52,12 @@ class cabeca(pygame.sprite.Sprite):
 #criação da classe Pedaço_Cobra -----------------------------
 class Pedaco_Cobra(cabeca):
 
-    def __init__(self, lista_, x_, y_, dir_esq, animacao):
-        super().__init__(lista_,x_,y_)
+    def __init__(self, animation,list):
+        super().__init__(animation,list)
+        dir_esq=list[2]
+        animacao=list[3]
         self.image = self.lista[dir_esq][animacao]
-        super().position(x_,y_)
+        super().position(list)
 
     def update(self):
         pass
