@@ -15,20 +15,6 @@ pygame.mixer.init()
 tela = pygame.display.set_mode((settings.length, settings.width))
 pygame.display.set_caption('1,2,3 BERTO')
 
-state = settings.start
-while state != settings.over:      # para todo estado de jogo diferente de acabou o jogo esta rodando por meio do while
-
-    if state == settings.start:
-        state = init_screen(tela) # para o estado de jogo "ta comecando" se inicia a tela inicial
-
-    elif state == settings.happening:
-        state = o_jogo(tela)    # para o estado de jogo "ta rolando" se inicia a tela principal do jogo
-
-    elif state == settings.game_over:
-        state = game_over_sreen(tela)   # para o estado de jogo "game over" se inicia a tela final
-
-    else:
-        state = settings.over      # finaliza o jogo
-
+settings.situation_game(init_screen,o_jogo,game_over_sreen,tela)
 # ===== Finalização =====
 pygame.quit()  # Função do PyGame que finaliza os recursos utilizados

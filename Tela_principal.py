@@ -127,24 +127,8 @@ def o_jogo(tela):
         hit = pygame.sprite.spritecollide(player, rabo_da_cobra, False)
 
         #delimitações da area de jogo ----------------------------------------------
-        if len(hit) > 0:
-    
-            estado_de_jogo = settings.game_over
-
-        if player.rect.x == 200:
-            estado_de_jogo = settings.game_over
-
-        if player.rect.x == 1200:
-            estado_de_jogo = settings.game_over
-
-        if player.rect.y == 50:
-            estado_de_jogo = settings.game_over
-
-        if player.rect.y == 900:
-            estado_de_jogo = settings.game_over
-        
-        if estado_de_jogo == settings.game_over:
-            pygame.mixer.music.stop()
+        pos=(player.rect.x,player.rect.y)
+        estado_de_jogo = settings.game_limitations(pos,hit,estado_de_jogo)
         #colisão com a fruta = aumento de tamanho---------------------------------------------------------
         col = pygame.sprite.spritecollide(player, frutinhaG, False)
 
@@ -158,8 +142,8 @@ def o_jogo(tela):
 
         #print da pontuação ------------------------------------------------------------------------------
 
-        pontuacao = fonte.render("Numero de Bertos: {}". format(bertos), True, (120, 255, 120))
-        tela.blit(pontuacao, (17, 325))
+        pontuacao = fonte.render("Numero de Bertos: {}". format(bertos), True, settings.position_phrase)
+        tela.blit(pontuacao, settings.position_score)
 
         pygame.display.update()
 
