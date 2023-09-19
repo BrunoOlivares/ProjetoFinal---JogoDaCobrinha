@@ -1,5 +1,5 @@
 #import de bibliotecas ou arquivos do jogo
-from Predefinicoes import GAME_OVER, LARGURA, COMPRIMENTO
+from Predefinicoes import settings
 import pygame
 
 
@@ -8,13 +8,13 @@ import pygame
 def load_assets():    # função para dar load e ajustar as imagens e sons utilizados durante o jogo
     assets={}
     background_principal = pygame.image.load("telas do jogo\Tela_principal.png").convert()       #tela principal
-    background_principal = pygame.transform.scale(background_principal, (COMPRIMENTO, LARGURA))
+    background_principal = pygame.transform.scale(background_principal, (settings.length, settings.width))
     background_principal_rect = background_principal.get_rect()
     background_game_over = pygame.image.load('telas do jogo\Tela_de_game_over.png').convert()   #tela para game over
-    background_game_over = pygame.transform.scale(background_game_over, (COMPRIMENTO, LARGURA))
+    background_game_over = pygame.transform.scale(background_game_over, (settings.length, settings.width))
     background_game_over_rect = background_game_over.get_rect()
     background_inicial = pygame.image.load('telas do jogo\Tela_inicial_ctexto.png').convert()    #tela de inicio
-    background_inicial = pygame.transform.scale(background_inicial, (COMPRIMENTO, LARGURA))
+    background_inicial = pygame.transform.scale(background_inicial, (settings.length, settings.width))
     background_inicial_rect = background_inicial.get_rect()
 
     assets['bg principal']=background_principal

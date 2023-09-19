@@ -1,31 +1,116 @@
-LARGURA = 900
-COMPRIMENTO = 1200
+import pygame
+class config():
 
-#Estados de jogo-----------------------------------
+    def __init__(self) -> None:   
+        self.width = 900
+        self.length = 1200
+        self.position_phrase=(120, 255, 120)
+        self.position_score=(17, 325)
 
-ACABOU = 0
-GAME_OVER = 1
-TA_COMEÇANDO = 2
-TA_ROLANDO = 3
+        #Estados de jogo-----------------------------------
 
-#FPS-----------------------------------------------
+        self.over = 0
+        self.game_over = 1
+        self.start = 2
+        self.happening = 3
 
-FPS = 20
+        #FPS-----------------------------------------------
 
-#lista das cordenadas da cobra---------------------
+        self.fps = 20
 
-coordenadas_xy_pedaços = []
+        #lista das cordenadas da cobra---------------------
 
-# variaveis----------------------------------------
+        self.coordenadas_xy_pedaços = []
 
-speed = 25
+        # variaveis----------------------------------------
 
-bertinhos=1
+        self.speed = 25
 
-x_inicial = 300
+        self.bertinhos=1
 
-y_inicial = 300
+        self.x_inicial = 300
 
-speed = 25
+        self.y_inicial = self.x_inicial
 
-#--------------------------------------------------
+        #--------------------------------------------------
+   
+    def commands(self,p,e):
+    # Codigo para possíveis comandos e suas consequencias
+        for event in pygame.event.get():
+    
+            if event.type == pygame.QUIT: 
+
+                e = self.over    # fim do jogo
+             
+
+            if event.type == pygame.KEYDOWN:
+
+                apertou=True
+
+                # Dependendo da tecla, altera a velocidade para trocar de direção
+                if event.key == pygame.K_LEFT and p.speedx == 0:
+
+                    p.speedx = -self.speed
+                    p.speedy = 0
+
+                if event.key == pygame.K_RIGHT and p.speedx == 0:
+
+                    p.speedx = self.speed
+                    p.speedy = 0
+
+                if event.key == pygame.K_UP and p.speedy == 0:
+
+                    p.speedx = 0
+                    p.speedy = -self.speed
+
+                if event.key == pygame.K_DOWN and p.speedy == 0:
+
+                    p.speedx = 0
+                    p.speedy = self.speed
+
+                if event.key == pygame.K_0:
+
+                    e = self.game_over
+        
+        p.update()
+        return p,e
+
+    def game_limitations(self,position,list,e):
+        if len(list) > 0:
+            e = self.game_over
+
+        if position[0] == 200:
+            e = self.game_over
+
+        if position[0] == 1200:
+            e = self.game_over
+
+        if position[1] == 50:
+            e = self.game_over
+
+        if position[1] == 900:
+            e = self.game_over
+        
+        if e == self.game_over:
+            pygame.mixer.music.stop()
+        return e
+        
+    def situation_game(self,init,o_jogo,gameover,tela):
+        state = self.start
+        while state != self.over:      # para todo estado de jogo diferente de acabou o jogo esta rodando por meio do while
+
+            if state == self.start:
+                state = init(tela) # para o estado de jogo "ta comecando" se inicia a tela inicial
+
+            elif state == self.happening:
+                state = o_jogo(tela)    # para o estado de jogo "ta rolando" se inicia a tela principal do jogo
+
+            elif state == self.game_over:
+                state = gameover(tela)   # para o estado de jogo "game over" se inicia a tela final
+
+            else:
+                state = self.over      # finaliza o jogo
+    
+        
+
+settings = config()
